@@ -1,6 +1,5 @@
 import './css/styles.css';
-// import {
-//     fetchCountries} from `./countries-api`
+import { fetchCountries } from './countries-api';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -14,8 +13,10 @@ searchBox.addEventListener(`input`, handleInputSubmit)
 
 function handleInputSubmit(event){
 event.preventDefault();
-const serchCity = event.target.value.trim()
+const searchedCity = event.target.value.trim()
 
-fetchCountries
+fetchCountries(searchedCity).then(data => {
+    console.log(data)
+})
 
 }
