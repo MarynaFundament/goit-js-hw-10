@@ -5,8 +5,8 @@ import { fetchCountries } from './fetchCountries.js';
 const DEBOUNCE_DELAY = 300;
 
 const searchBox = document.getElementById("search-box");
-const wrapperList = document.querySelector(".country-list");
-const wrapperEl = document.querySelector(".country-info");
+const countryList = document.querySelector(".country-list");
+const countryInfo = document.querySelector(".country-info");
 
 
 
@@ -16,8 +16,22 @@ function handleInputSubmit(event) {
   event.preventDefault();
   const searchCountry = event.target.value.trim();
   
-fetchCountries(searchCountry).then(data =>
-  createMarkupCountryInfo(data))
+fetchCountries(searchCountry)
+.then(searchCountry => {
+  if (searchCountry.length > 10) {
+    alert(
+      'Too many matches found. Please enter a more specific name.'
+    );
+  } else if (searchCountry.length >= 2 && searchCountry.length <= 10) {
+    resetMarkup(countryList);
+    createMarkupCountryInfo(searchCountry);
+    resetMarkup(countryInfo);
+  } else {
+    resetMarkup(countryInfo);
+    createMarkupCountryInfo(searchCountry);
+    resetMarkup(countryList);
+  }
+})
    .catch(error => console.error(error));
 
 
@@ -45,7 +59,11 @@ function createMarkupCountryInfo(searchCountry) {
     })
     .join('');
 
-  wrapperEl.insertAdjacentHTML('beforeend', markup);
+    countryList.insertAdjacentHTML('beforeend', markup);
+}
+
+function resetMarkup(el) {
+  el.innerHTML = '';
 }
 
 
