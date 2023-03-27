@@ -12,11 +12,3 @@ export const fetchCountries = (name) => {
     });
 };
 
-
-
-
-
-
-
-
-
