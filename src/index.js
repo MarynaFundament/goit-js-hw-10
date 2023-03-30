@@ -10,6 +10,9 @@ const wrapperList = document.querySelector(".country-list");
 const wrapperEl = document.querySelector(".country-info");
 
 searchBox.addEventListener(`input`,debounce(handleInputSubmit, DEBOUNCE_DELAY));
+wrapperList.addEventListener('click', handleListClick);
+
+
 
 function handleInputSubmit(event) {
   const searchCountry = event.target.value.trim();
@@ -43,10 +46,23 @@ function thenResult(data){
   }
 }
 
+function handleListClick(event) {
+  const target = event.target;
+  const countryName = target.closest('div').dataset.name;
+  if (countryName) {
+    fetchCountries(countryName)
+      .then(createMarkupCountryInfo)
+      .catch(error => {
+        console.error(error);
+        Notiflix.Notify.failure('Oops, something went wrong');
+      });
+  }
+}
+
 function createShortmarkup(searchCountry) {
   const shortMarkup = searchCountry.map(({name,flags}) => {
     return `<div>
-      <img src="${flags.svg}" alt="flag">
+      
       <p> ${name.common}</p>
     </div>`;
   });
@@ -57,7 +73,7 @@ function createShortmarkup(searchCountry) {
 function createMarkupCountryInfo(searchCountry){
   const markup = searchCountry.map(({name,capital,population,languages,flags}) => {
     return `<div> 
-      <img src="${flags.svg}" alt="flag">
+      
       <p> ${name.common}</p>
     </div> 
     <div> 
