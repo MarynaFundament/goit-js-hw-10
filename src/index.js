@@ -62,7 +62,7 @@ function handleListClick(event) {
 function createShortmarkup(searchCountry) {
   const shortMarkup = searchCountry.map(({name,flags}) => {
     return `<div>
-      
+      <img class="country-list__flag" src="${flags.svg}" alt="Flag of ${name.official}" width = 40px height = 30px>
       <p> ${name.common}</p>
     </div>`;
   });
@@ -73,7 +73,7 @@ function createShortmarkup(searchCountry) {
 function createMarkupCountryInfo(searchCountry){
   const markup = searchCountry.map(({name,capital,population,languages,flags}) => {
     return `<div> 
-      
+      <img class="country-list__flag" src="${flags.svg}" alt="Flag of ${name.official}" width = 40px height = 30px>
       <p> ${name.common}</p>
     </div> 
     <div> 
